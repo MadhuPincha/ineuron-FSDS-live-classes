@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<p style="text-align:left; color: white; padding: 10px">All data saving to cloud status: {{ data['youtuber_save_status'] }} </p>
+
+<h3 style="text-align:center; background:#17A2B8; color: white; padding: 10px"> {{ data['channel_title'] }} </h3>
+  <table id="data" class="container table text-light" >
+    <thead>
+      <tr>
+        <th>Sr. No</th>
+        <th>Published On</th>
+        <th>Title</th>
+        <th>Likes</th>
+        <th>Views</th>
+        <th>Comments</th>
+        <th>Watch Url</th>
+        <th>S3 Url</th>
+        <th>View Comments</th>
+        <th>Thumbnail Base64</th>
+        <th>Thumbnail</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for video in data['videos'] %}
+        <tr class="container table text-light">
+          <td class="align-middle">{{ loop.index }}</td>
+          <td class="align-middle">{{ video.publishedAt }}</td>
+          <td class="align-middle">{{ video.title }}</td>
+          <td class="align-middle">{{ video.likes }}</td>
+          <td class="align-middle">{{ video.views }}</td>
+          <td class="align-middle">{{ video.comment_count }}</td>
+          <td class="align-middle"><a href="{{ video.watch_url }}">{{ video.watch_url }}</a></td>
+          <td class="align-middle"><a href="{{ video.s3_url }}">{{ video.s3_url }}</a></td>
+          <td class="align-middle"><a href="/comments?vid={{video.videoId}} ">View Comments</a></td>
+          <td><img src="data:image/jpeg;base64,{{ video.thumbnail_base64 }}" alt="base64_thumbnail" width="120" height="90"/></td>
+          <td><img src="{{ video.thumbnail_url }}" alt="{{ video.thumbnail_url }}" width="120" height="90" /></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
